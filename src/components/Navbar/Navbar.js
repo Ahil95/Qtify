@@ -16,6 +16,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Searchbar from "./SearchBar/Searchbar";
 import Feedback from "./feedbackbutton/FeedbackButton";
+import Logo from "../../asset/logo.png";
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -118,7 +119,7 @@ export default function PrimarySearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ background: "#00DC4A " }}>
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           {/* <IconButton
             size="large"
             edge="start"
@@ -128,18 +129,19 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            Qtify
-          </Typography>
+          <Box>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              // sx={{ display: { xs: "none", sm: "block" } }}
+            >
+              <img src={Logo} alt="logo" />
+            </Typography>
+          </Box>
           <Box>
             <Searchbar />
           </Box>
-          <Box sx={{ flexGrow: 1 }} />
           {/* <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
@@ -171,7 +173,9 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
           </Box> */}
-          <Feedback />
+          <Box>
+            <Feedback />
+          </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"

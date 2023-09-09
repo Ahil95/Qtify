@@ -1,4 +1,10 @@
-import { InputBase, alpha, styled } from "@mui/material";
+import {
+  InputAdornment,
+  InputBase,
+  TextField,
+  alpha,
+  styled,
+} from "@mui/material";
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -41,15 +47,38 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Searchbar = () => {
   return (
     <div>
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Search a song of your choice"
-          inputProps={{ "aria-label": "search" }}
-        />
-      </Search>
+      <TextField
+        // label="Project"
+        placeholder="Search a album of your choice"
+        // focused
+        // onChange={handleSearch}
+        id="outlined-start-adornment"
+        sx={{
+          width: "40vw",
+          background: "white",
+          borderRadius: "5px",
+          fontSize: "12px",
+          outline: "none",
+          border: "1px solid black",
+          ".MuiInputBase-root, .MuiOutlinedInput-root, .MuiInputBase-colorPrimary, .MuiInputBase-formControl, .MuiInputBase-adornedEnd, .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root":
+            {
+              height: "2rem",
+            },
+        }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end" variant="filled">
+              <SearchIcon
+                sx={{
+                  borderLeft: "1px solid black",
+                  height: "2rem",
+                  paddingLeft: "15px",
+                }}
+              />
+            </InputAdornment>
+          ),
+        }}
+      />
     </div>
   );
 };

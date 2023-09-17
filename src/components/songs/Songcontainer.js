@@ -14,6 +14,7 @@ import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import PropTypes from "prop-types";
+import BasicAccordion from "../accordian/Accordian";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -332,6 +333,19 @@ const Songcontainer = () => {
         </CustomTabPanel>
       </Box>
       <Divider sx={{ background: "green" }}></Divider>
+      <Box>
+        <p
+          style={{
+            color: "white",
+            textAlign: "center",
+            fontSize: "45px",
+            fontWeight: "600",
+          }}
+        >
+          FAQs
+        </p>
+        <BasicAccordion />
+      </Box>
     </div>
   );
 };

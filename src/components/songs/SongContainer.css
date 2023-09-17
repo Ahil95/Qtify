@@ -1,3 +1,7 @@
 .songcontainer{
     padding: 0 5%;
 }
+.songGridheader{
+    display: flex;
+    justify-content: space-between;
+}

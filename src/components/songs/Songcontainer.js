@@ -119,17 +119,33 @@ const Songcontainer = () => {
           </h3>
         )}
       </div>
-      <Grid sx={{ flexGrow: 1 }} container>
-        {newSongList.slice(0, showMoreNewCount).map((item, index) => (
-          <Grid key={index} item xs={4} md={2} lg={2}>
-            <Card
-              img={item?.image}
-              follows={item?.follows}
-              songfooter={item?.title}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {showMoreNew ? (
+        <Grid sx={{ flexGrow: 1 }} container>
+          {newSongList.map((item, index) => (
+            <Grid key={index} item xs={4} md={2} lg={2}>
+              <Card
+                img={item?.image}
+                follows={item?.follows}
+                songfooter={item?.title}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <div className="carousel-container">
+          <Carousel responsive={responsive}>
+            {newSongList.map((item, index) => (
+              <div key={index}>
+                <Card
+                  img={item?.image}
+                  follows={item?.follows}
+                  songfooter={item?.title}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </div>
+      )}
     </div>
   );
 };

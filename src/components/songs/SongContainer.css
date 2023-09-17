@@ -5,3 +5,10 @@
     display: flex;
     justify-content: space-between;
 }
+.songcontainer {
+    padding: 20px;
+  }
+  
+  .react-multiple-carousel__arrow{
+    background-color: #34C94B !important;
+  }

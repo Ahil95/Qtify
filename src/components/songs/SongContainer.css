@@ -12,3 +12,8 @@
   .react-multiple-carousel__arrow{
     background-color: #34C94B !important;
   }
+  .tab-container{
+    border-top: 1px solid green;
+    border-bottom: 1px solid green;
+
+  }

@@ -19,19 +19,29 @@ const SongCard = (props) => {
         />
 
         <CardActions>
-          <Button
-            size="small"
-            sx={{ borderRadius: "10px", background: "black", color: "white" }}
-          >
-            {props?.follows}
-          </Button>
+          {props.follows && props.follows !== "" && (
+            <Button
+              size="small"
+              sx={{ borderRadius: "10px", background: "black", color: "white" }}
+            >
+              {props.follows}
+            </Button>
+          )}
+          {props.likes && props.likes !== "" && (
+            <Button
+              size="small"
+              sx={{ borderRadius: "10px", background: "black", color: "white" }}
+            >
+              {props.likes}
+            </Button>
+          )}
         </CardActions>
       </Card>
       <Typography
         gutterBottom
-        variant="h5"
-        component="div"
-        sx={{ color: "white" }}
+        // variant="h5"
+        component="p"
+        sx={{ color: "white", fontSize: "18px", marginTop: "10px" }}
       >
         {props?.songfooter}
       </Typography>

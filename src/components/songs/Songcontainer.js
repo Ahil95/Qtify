@@ -1,10 +1,51 @@
 import React, { useEffect, useState } from "react";
 import Card from "./SongCard";
-import { Grid, Button } from "@mui/material"; // Import Button component
+import {
+  Grid,
+  Button,
+  Box,
+  Typography,
+  Tabs,
+  Tab,
+  Divider,
+} from "@mui/material"; // Import Button component
 import "./SongContainer.css";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import PropTypes from "prop-types";
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3, color: "white" }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const Songcontainer = () => {
   const initialCardCount = 6;
@@ -12,12 +53,20 @@ const Songcontainer = () => {
   const [newSongList, setNewSongList] = useState([]);
   const [showMoretop, setShowMoreTop] = useState(false); // State to track show more
   const [showMoreNew, setShowMoreNew] = useState(false); // State to track show more
-  const [showMoreTopCount, setShowMoreTopCount] = useState(initialCardCount);
-  const [showMoreNewCount, setShowMoreNewCount] = useState(initialCardCount);
+  const [allSongs, setAllSongs] = useState([]);
+  const [rockSongs, setRockSongs] = useState([]);
+  const [value, setValue] = React.useState(0);
+  const [selectedGenre, setSelectedGenre] = useState("all"); // Initialize with "all" genre
+  const genres = ["all", "rock", "pop", "jazz", "blues"];
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setSelectedGenre(genres[newValue]);
+  };
   // Initial number of cards to show
   useEffect(() => {
     topSongs();
     newSongs();
+    AllSongs();
   }, []);
   const topSongs = () => {
     axios
@@ -41,12 +90,27 @@ const Songcontainer = () => {
         console.log(err);
       });
   };
+  const AllSongs = () => {
+    axios
+      .get("https://qtify-backend-labs.crio.do/songs")
+      .then((res) => {
+        console.log(res?.data);
+        setAllSongs(res?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const filteredData =
+    value === 0
+      ? allSongs // Show all items if "all" is selected
+      : allSongs.filter((item) => item.genre.key === selectedGenre);
+
+  console.log({ filteredData });
   const toggleTop = () => {
-    setShowMoreTopCount(showMoretop ? initialCardCount : topSongList.length);
     setShowMoreTop(!showMoretop);
   };
   const toggleNew = () => {
-    setShowMoreNewCount(showMoreNew ? initialCardCount : newSongList.length);
     setShowMoreNew(!showMoreNew);
   };
   const responsive = {
@@ -146,6 +210,128 @@ const Songcontainer = () => {
           </Carousel>
         </div>
       )}
+      <Divider sx={{ background: "green", marginTop: "20px" }}></Divider>
+      <div className="songGridheader">
+        <h3 style={{ color: "white" }}>Songs</h3>
+      </div>
+      <Box sx={{ width: "100%" }}>
+        <Box
+          sx={{
+            borderBottom: 2,
+            borderColor: "divider",
+            ".MuiTabs-indicator": {
+              backgroundColor: "green",
+            },
+            ".MuiButtonBase-root-MuiTab-root.Mui-selected ": {
+              color: "white",
+            },
+          }}
+        >
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            textColor="white"
+          >
+            {genres.map((genre, index) => (
+              <Tab
+                label={genre}
+                {...a11yProps(index)}
+                key={genre}
+                sx={{
+                  color: "#ffff",
+                  fontWeight: "600",
+                }}
+              />
+            ))}
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <Carousel responsive={responsive}>
+            {allSongs.map((item, index) => (
+              <div key={index}>
+                <Card
+                  img={item?.image}
+                  follows={item?.follows}
+                  songfooter={item?.title}
+                  likes={item?.likes}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <Carousel responsive={responsive}>
+            {filteredData.map((item, index) => (
+              <div key={index}>
+                <Card
+                  img={item?.image}
+                  follows={item?.follows}
+                  songfooter={item?.title}
+                  likes={item?.likes}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          <Carousel responsive={responsive}>
+            {filteredData.map((item, index) => (
+              <div key={index}>
+                <Card
+                  img={item?.image}
+                  follows={item?.follows}
+                  songfooter={item?.title}
+                  likes={item?.likes}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3}>
+          <Carousel responsive={responsive}>
+            {filteredData.map((item, index) => (
+              <div key={index}>
+                <Card
+                  img={item?.image}
+                  follows={item?.follows}
+                  songfooter={item?.title}
+                  likes={item?.likes}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={4}>
+          <Carousel responsive={responsive}>
+            {filteredData.map((item, index) => (
+              <div key={index}>
+                <Card
+                  img={item?.image}
+                  follows={item?.follows}
+                  songfooter={item?.title}
+                  likes={item?.likes}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={5}>
+          <Carousel responsive={responsive}>
+            {filteredData.map((item, index) => (
+              <div key={index}>
+                <Card
+                  img={item?.image}
+                  follows={item?.follows}
+                  songfooter={item?.title}
+                  likes={item?.likes}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </CustomTabPanel>
+      </Box>
+      <Divider sx={{ background: "green" }}></Divider>
     </div>
   );
 };
